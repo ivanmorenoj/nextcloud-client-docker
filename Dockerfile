@@ -1,5 +1,5 @@
-FROM alpine:latest
-LABEL maintainer="juanignacioborda@gmail.com"
+FROM alpine:3.15.0
+LABEL maintainer="info@ivanmoreno.dev"
 ARG VCS_REF
 ARG BUILD_DATE
 ARG buildno
@@ -26,7 +26,7 @@ ENV USER=$USER \
 RUN addgroup -g $USER_GID $USER && adduser -G $USER -D -u $USER_UID $USER
 
 # update repositories and install nextcloud-client
-RUN apk update && apk add nextcloud-client moreutils && rm -rf /etc/apk/cache
+RUN apk add --no-cache nextcloud-client moreutils
 
 # add run script
 ADD run.sh /usr/bin/run.sh

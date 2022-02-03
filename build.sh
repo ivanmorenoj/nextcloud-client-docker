@@ -1,6 +1,9 @@
 #!/bin/bash
+GIT_HASH=`git rev-parse --short HEAD`
+DOCKER_IMAGE_REPO=docker.io/ivanmorenoj/nextcloud-client
+
 time docker build \
-        --build-arg VCS_REF=`git rev-parse --short HEAD` \
+        --build-arg VCS_REF=$GIT_HASH \
         --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-        -t juanitomint/nextcloud-client . | tee build.log
-docker images juanitomint/nextcloud-client
+        -t $DOCKER_IMAGE_REPO:$GIT_HASH . | tee build.log
+docker push $DOCKER_IMAGE_REPO:$GIT_HASH
