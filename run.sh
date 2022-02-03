@@ -33,6 +33,19 @@ fi
 [ "$NC_HIDDEN" == true ] && echo "[ info run.sh ]: Sync hidden files enabled" | ts "${LOG_DATE_FORMAT}"
 [ "$NC_TRUST_CERT" == true ] && echo "[ info run.sh ]: Trust any SSL certificate" | ts "${LOG_DATE_FORMAT}"
 
+# parse nextcloudcmd arguments
+set --
+[ "$NC_HIDDEN" ] && set -- "$@" "-h"
+[ "$NC_SILENT" == true ] && set -- "$@" "--silent"
+[ "$NC_TRUST_CERT" == true ] && set -- "$@" "--trust"
+[ "$NC_PATH" ] && set -- "$@" "--path" "$NC_PATH"
+[ "$EXCLUDE" ] && set -- "$@" "--exclude" "$EXCLUDE"
+[ "$UNSYNCEDFOLDERS" ] && set -- "$@" "--unsyncedfolders" "$UNSYNCEDFOLDERS"
+set -- "$@" "--non-interactive" "-u" "$NC_USER" "-p" "$NC_PASS" "$NC_SOURCE_DIR" "$NC_URL"
+
+# set nextcloudcmd args
+NC_CMD_ARGS="$@" 
+
 while true
 do
 	[ "$NC_SILENT" == true ] && echo "[ info run.sh ]: Start sync from $NC_URL to $NC_SOURCE_DIR" | ts "${LOG_DATE_FORMAT}"
@@ -40,16 +53,7 @@ do
 	echo "[ info run.sh ]: chown -R $USER_UID:$USER_GID $NC_SOURCE_DIR" | ts "${LOG_DATE_FORMAT}"
 	chown -R $USER_UID:$USER_GID $NC_SOURCE_DIR
 
-	set --
-	[ "$NC_HIDDEN" ] && set -- "$@" "-h"
-	[ "$NC_SILENT" == true ] && set -- "$@" "--silent"
-	[ "$NC_TRUST_CERT" == true ] && set -- "$@" "--trust"
-	[ "$NC_PATH" ] && set -- "$@" "--path" "$NC_PATH"
-	[ "$EXCLUDE" ] && set -- "$@" "--exclude" "$EXCLUDE"
-	[ "$UNSYNCEDFOLDERS" ] && set -- "$@" "--unsyncedfolders" "$UNSYNCEDFOLDERS"
-	set -- "$@" "--non-interactive" "-u" "$NC_USER" "-p" "$NC_PASS" "$NC_SOURCE_DIR" "$NC_URL"
-
-  NC_CMD_ARGS="$@"
+	# launch nexcloudcmd as user
 	su - $USER -c "nextcloudcmd $NC_CMD_ARGS"
 
 	[ "$NC_SILENT" == true ] && echo "[ info run.sh ]: Sync done" | ts "${LOG_DATE_FORMAT}"
