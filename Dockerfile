@@ -26,7 +26,8 @@ ENV USER=$USER \
 RUN addgroup -g $USER_GID $USER && adduser -G $USER -D -u $USER_UID $USER
 
 # update repositories and install nextcloud-client
-RUN apk add --no-cache nextcloud-client moreutils
+RUN apk add --no-cache \
+  nextcloud-client moreutils tzdata
 
 # add run script
 ADD run.sh /usr/bin/run.sh

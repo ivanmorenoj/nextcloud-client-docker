@@ -48,7 +48,9 @@ do
 	[ "$EXCLUDE" ] && set -- "$@" "--exclude" "$EXCLUDE"
 	[ "$UNSYNCEDFOLDERS" ] && set -- "$@" "--unsyncedfolders" "$UNSYNCEDFOLDERS"
 	set -- "$@" "--non-interactive" "-u" "$NC_USER" "-p" "$NC_PASS" "$NC_SOURCE_DIR" "$NC_URL"
-	su - $USER -c "nextcloudcmd $@"
+
+  NC_CMD_ARGS="$@"
+	su - $USER -c "nextcloudcmd $NC_CMD_ARGS"
 
 	[ "$NC_SILENT" == true ] && echo "[ info run.sh ]: Sync done" | ts "${LOG_DATE_FORMAT}"
 
