@@ -1,5 +1,7 @@
-FROM alpine:3.15.0
-LABEL maintainer="info@ivanmoreno.dev"
+FROM alpine:3.19.1
+
+LABEL org.opencontainers.image.source https://github.com/ivanmorenoj/nextcloud-client-docker
+
 ARG VCS_REF
 ARG BUILD_DATE
 ARG buildno
