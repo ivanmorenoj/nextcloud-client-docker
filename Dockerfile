@@ -33,4 +33,4 @@ RUN apk add --no-cache nextcloud-client moreutils
 # add run script
 ADD run.sh /usr/bin/run.sh
 
-CMD /usr/bin/run.sh
+CMD ["/usr/bin/run.sh"]
