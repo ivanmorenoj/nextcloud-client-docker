@@ -42,7 +42,6 @@ jobs:
         with:
           context: .
           push: true
-          build-args: SONAR_CNES_REPORT_VERSION=${{ vars.SONAR_CNES_REPORT_VERSION_ARG }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
       
