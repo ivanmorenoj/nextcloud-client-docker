@@ -1,6 +1,6 @@
-FROM alpine:3.20.3
+FROM alpine:3.22.0
 
-LABEL org.opencontainers.image.source https://github.com/ivanmorenoj/nextcloud-client-docker
+LABEL org.opencontainers.image.source=https://github.com/ivanmorenoj/nextcloud-client-docker
 
 ARG VCS_REF
 ARG BUILD_DATE
